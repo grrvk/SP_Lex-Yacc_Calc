@@ -10,17 +10,17 @@
     
 "#include"([ ]+)?((<(\\.|[^>])+>)|(\"(\\.|[^"])+\"))                                              {return HEADER;}
 "#define"[ ]+[a-zA-z_][a-zA-z_0-9]*                                                               {return DEFINE;}
-"list"                                                                                            {return LIST; }
-"auto"|"register"|"static"|"extern"|"typedef"                                                     {return storage_const;}
-"void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"                           {return type_const;}
-"const"|"volatile"                                                                                {return sym_const;}
+"list"                                                                                            {return LIST;}
+"auto"|"static"|"typedef"                                                                         {return storage_const;}
+"void"|"char"|"short"|"int"|"long"|"float"|"double"                                               {return type_const;}
+"const"                                                                                           {return sym_const;}
 "if"                                                                                              {return IF;}
 "else"                                                                                            {return ELSE;}
 "for"                                                                                             {return FOR;}
 "do"                                                                                              {return DO;}
 "while"                                                                                           {return WHILE;}
 "break"                                                                                           {return BREAK;}
-"struct"|"union"                                                                                  {return sym_struct;}
+"struct"                                                                                          {return sym_struct;}
 "return"                                                                                          {return RETURN;}
 "sizeof"                                                                                          {return SIZEOF;}
 "||"                                                                                              {return or_const;}
@@ -30,15 +30,14 @@
 ">>"|"<<"                                                                                         {return move_const;}
 "++"|"--"                                                                                         {return inc_dec_const;}
 ";"|"="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">"       {return yytext[0];}
-"*="|"/="|"+="|"%="|">>="|"-="|"<<="|"&="|"^="|"|="                                               {return ASSIGN_PUNCTUATION;}
+"*="|"/="|"+="|"%="|">>="|"-="                                                                    {return ASSIGN_PUNCTUATION;}
 [0-9]+                                                                                            {return int_const;}
 "&*+-~!"                                                                                          {return UNARY; }
 [0-9]+"."[0-9]+                                                                                   {return float_const;}
 "'"."'"                                                                                           {return char_const;}
 [a-zA-z_][a-zA-z_0-9]*                                                                            {return id_s;}
 \"(\\.|[^\"])*\"                                                                                  {return string;}
-"//"(\\.|[^\n])*[\n]                                                                              ;
-[/][*]([^*]|[*]*[^*/])*[*]+[/]                                                                    ;
+
 [ \t\n]                                                                                           ;
 %%
 

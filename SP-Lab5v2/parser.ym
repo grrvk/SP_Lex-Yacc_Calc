@@ -5,9 +5,9 @@
     int successful_parsing = 1;
 %}
 
-%token int_const char_const float_const id_s string storage_const type_const sym_const sym_struct DEFINE
-%token LIST IF FOR DO WHILE BREAK RETURN SIZEOF ASSIGN_PUNCTUATION UNARY or_const and_const equality_const move_const weak_comparison_const inc_dec_const
-%token ELSE HEADER
+%token int_const char_const float_const id_s string storage_const type_const sym_const sym_struct
+%token HEADER DEFINE IF ELSE FOR DO WHILE BREAK RETURN SIZEOF ASSIGN_PUNCTUATION LIST UNARY
+%token or_const and_const equality_const move_const weak_comparison_const inc_dec_const
 
 %left '+' '-'
 %left '*' '/'
