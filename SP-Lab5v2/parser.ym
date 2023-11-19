@@ -6,7 +6,7 @@
 %}
 
 %token int_const char_const float_const id_s string storage_const type_const sym_const sym_struct
-%token HEADER DEFINE IF ELSE FOR DO WHILE BREAK RETURN SIZEOF ASSIGN_PUNCTUATION LIST UNARY
+%token HEADER DEFINE IF ELSE FOR DO WHILE BREAK RETURN SIZEOF ASSIGN_PUNCTUATION LIST VECTOR UNARY
 %token or_const and_const equality_const move_const weak_comparison_const inc_dec_const
 
 %left '+' '-'
@@ -50,6 +50,7 @@ decl_specifier              : storage_const decl_specifier
                             | sym_const decl_specifier
                             | sym_const
                             | LIST '<' type_specifier '>'
+                            | VECTOR '<' type_specifier '>'
                             ;
 custom_class_specifier      : sym_struct id_s '{' struct_decl_list '}'
                             | sym_struct '{' struct_decl_list '}'
