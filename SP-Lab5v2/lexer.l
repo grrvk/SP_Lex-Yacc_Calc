@@ -1,44 +1,48 @@
+%option yylineno
+
 %{
-#define YYSTYPE float
-#include "y.tab.h"
-#include <stdlib.h>
-void yyerror(char *);
+    #include<stdio.h>
+    #include"y.tab.h"
+    #include<math.h>
 %}
 
 %%
-
-[0-9]+(.[0-9]+)?       {
-            yylval = atof(yytext);
-            return INTEGER;
-        }
-
-pi {return PHI; }
-exp {return EXP; }
-
-[-+*%^/()\n]      { return *yytext; }
-
-sin             {return SIN;}
-cos {return COS;}
-tan {return TAN;}
-log {return LOG;}
-cot {return COT;}
-cosec {return COSEC;}
-sec {return SEC;}
-ln {return LN;}
-asin {return ASIN;}
-acos {return ACOS;}
-atan {return ATAN;}
-acot {return ACOT;}
-acosec {return ACOSEC;}
-asec {return ASEC;}
-sqrt {return SQRT;}
-
-[ \t]       ;       /* skip whitespace */
-
-.           yyerror(yytext);
-
+    
+"#include"([ ]+)?((<(\\.|[^>])+>)|(\"(\\.|[^"])+\"))                                              {return HEADER;}
+"#define"[ ]+[a-zA-z_][a-zA-z_0-9]*                                                               {return DEFINE;}
+"list"                                                                                            {return LIST; }
+"auto"|"register"|"static"|"extern"|"typedef"                                                     {return storage_const;}
+"void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"                           {return type_const;}
+"const"|"volatile"                                                                                {return sym_const;}
+"if"                                                                                              {return IF;}
+"else"                                                                                            {return ELSE;}
+"for"                                                                                             {return FOR;}
+"do"                                                                                              {return DO;}
+"while"                                                                                           {return WHILE;}
+"break"                                                                                           {return BREAK;}
+"struct"|"union"                                                                                  {return sym_struct;}
+"return"                                                                                          {return RETURN;}
+"sizeof"                                                                                          {return SIZEOF;}
+"||"                                                                                              {return or_const;}
+"&&"                                                                                              {return and_const;}
+"=="|"!="                                                                                         {return equality_const;}
+"<="|">="                                                                                         {return weak_comparison_const;}
+">>"|"<<"                                                                                         {return move_const;}
+"++"|"--"                                                                                         {return inc_dec_const;}
+";"|"="|","|"{"|"}"|"("|")"|"["|"]"|"*"|"+"|"-"|"/"|"?"|":"|"&"|"|"|"^"|"!"|"~"|"%"|"<"|">"       {return yytext[0];}
+"*="|"/="|"+="|"%="|">>="|"-="|"<<="|"&="|"^="|"|="                                               {return ASSIGN_PUNCTUATION;}
+[0-9]+                                                                                            {return int_const;}
+"&*+-~!"                                                                                          {return UNARY; }
+[0-9]+"."[0-9]+                                                                                   {return float_const;}
+"'"."'"                                                                                           {return char_const;}
+[a-zA-z_][a-zA-z_0-9]*                                                                            {return id_s;}
+\"(\\.|[^\"])*\"                                                                                  {return string;}
+"//"(\\.|[^\n])*[\n]                                                                              ;
+[/][*]([^*]|[*]*[^*/])*[*]+[/]                                                                    ;
+[ \t\n]                                                                                           ;
 %%
 
-int yywrap(void) {
-return 1;
+int yywrap(void)
+{
+    return 1;
 }
