@@ -11,8 +11,9 @@
 "#include"([ ]+)?((<(\\.|[^>])+>)|(\"(\\.|[^"])+\"))                                              {return HEADER;}
 "#define"[ ]+[a-zA-z_][a-zA-z_0-9]*                                                               {return DEFINE;}
 "list"                                                                                            {return LIST;}
+"vector"                                                                                          {return VECTOR;}
 "auto"|"static"|"typedef"                                                                         {return storage_const;}
-"void"|"char"|"short"|"int"|"long"|"float"|"double"                                               {return type_const;}
+"void"|"char"|"short"|"int"|"long"|"float"|"double"|"bool"                                          {return type_const;}
 "const"                                                                                           {return sym_const;}
 "if"                                                                                              {return IF;}
 "else"                                                                                            {return ELSE;}
